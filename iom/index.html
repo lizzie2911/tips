@@ -122,9 +122,25 @@
         async function loadGeoJSON(url) {
             let response = await fetch(url);
             let geojson = await response.json();
+            L.geoJSON(geojson, {
+                onEachFeature: function(feature, layer) {
+                    console.log(feature.properties)
+                    console.log(feature.properties["Incident Date"]);
+                    layer.bindPopup(`
+                       <h3>${feature.properties["Incident Date"]}</h3>
+                       <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                       </ul>
+                    `);
+                }
+            }).addTo(map);
 
         }
-        //loadGeoJSON(<URL>);
+        loadGeoJSON("convertcsv.geojson");
 
     </script>
 </body>
